@@ -1,5 +1,6 @@
 package com.csi.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,7 @@ public class Address {
     private String complement;
     private String state;
     private String city;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
