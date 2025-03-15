@@ -1,5 +1,6 @@
 package com.csi.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -7,9 +8,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "clients")
+@JsonInclude(JsonInclude.Include.NON_NULL )
 public class Client {
     @EmbeddedId
-    private ClientId clientId;
+    private ClientId clientId = new ClientId();
     private String name;
     @Embedded
     private Contact contact;
