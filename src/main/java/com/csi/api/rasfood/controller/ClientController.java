@@ -20,7 +20,7 @@ public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @GetMapping
     public ResponseEntity<List<Client>> findAll() {
