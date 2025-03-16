@@ -1,10 +1,12 @@
 package com.csi.api.rasfood.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "addresses")
+@JsonInclude(JsonInclude.Include.NON_NULL )
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
