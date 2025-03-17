@@ -1,5 +1,6 @@
 package com.csi.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "menu")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
