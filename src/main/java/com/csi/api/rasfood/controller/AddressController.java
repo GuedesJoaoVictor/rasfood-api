@@ -31,6 +31,11 @@ public class AddressController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
     }
 
+    @GetMapping("/cep/{cep}")
+    public ResponseEntity<List<Address>> findAllByCep(@PathVariable("cep") String cep) {
+        return ResponseEntity.status(HttpStatus.OK).body(addressRepository.findAddressByCep(cep));
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<Address> update(@PathVariable("id") Long id, @RequestBody Address address) throws JsonMappingException {
         Optional<Address> currentAddress = addressRepository.findById(id);
