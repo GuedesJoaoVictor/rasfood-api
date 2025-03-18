@@ -1,9 +1,11 @@
 package com.csi.api.rasfood.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "menu_category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MenuCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

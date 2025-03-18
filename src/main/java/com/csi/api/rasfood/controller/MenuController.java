@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping(value = "/menu")
 @RestController
+@RequestMapping(value = "/menu")
 public class MenuController {
+
     @Autowired
     private MenuRepository menuRepository;
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper mapper;
 
     @GetMapping
     public ResponseEntity<List<Menu>> findAll() {
@@ -33,7 +35,7 @@ public class MenuController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Menu> deleteById(@PathVariable("id") Long id) {
         Optional<Menu> menu = menuRepository.findById(id);
-        if(menu.isPresent()) {
+        if (menu.isPresent()) {
             menuRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(menu.get());
         }
@@ -43,7 +45,6 @@ public class MenuController {
     @PostMapping
     public ResponseEntity<Menu> create(@RequestBody Menu menu) {
         menuRepository.save(menu);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
     }
 
@@ -51,12 +52,10 @@ public class MenuController {
     public ResponseEntity<Menu> update(@PathVariable("id") Long id, @RequestBody Menu menu) throws JsonMappingException {
         Optional<Menu> currentMenu = menuRepository.findById(id);
 
-        if(currentMenu.isPresent()) {
+        if (currentMenu.isPresent()) {
             Menu existingMenu = currentMenu.get();
-            existingMenu.setId(menu.getId());
             mapper.updateValue(existingMenu, menu);
-
-            return ResponseEntity.status(HttpStatus.OK).body(existingMenu);
+            return ResponseEntity.status(HttpStatus.OK).body(menuRepository.save(existingMenu));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
