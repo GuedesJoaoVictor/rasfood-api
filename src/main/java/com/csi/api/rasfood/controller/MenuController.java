@@ -27,6 +27,11 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAll());
     }
 
+    @GetMapping("/category/{id}/available")
+    public ResponseEntity<List<Menu>> findAllByCategory(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Menu> findById(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findById(id).orElse(null));
