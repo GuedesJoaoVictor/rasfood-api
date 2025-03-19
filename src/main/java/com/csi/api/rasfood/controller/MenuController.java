@@ -1,5 +1,6 @@
 package com.csi.api.rasfood.controller;
 
+import com.csi.api.rasfood.dto.MenuDto;
 import com.csi.api.rasfood.entity.Menu;
 import com.csi.api.rasfood.repository.MenuRepository;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -27,14 +28,19 @@ public class MenuController {
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Menu> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findById(id).orElse(null));
+    }
+
     @GetMapping("/category/{id}/available")
     public ResponseEntity<List<Menu>> findAllByCategory(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Menu> findById(@PathVariable("id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findById(id).orElse(null));
+    @GetMapping("/name/{name}/available")
+    public ResponseEntity<List<MenuDto>> findAllByName(@PathVariable String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByName(name));
     }
 
     @DeleteMapping("/{id}")
