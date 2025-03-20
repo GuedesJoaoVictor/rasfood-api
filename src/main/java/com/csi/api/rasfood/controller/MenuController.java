@@ -3,6 +3,7 @@ package com.csi.api.rasfood.controller;
 import com.csi.api.rasfood.dto.MenuDto;
 import com.csi.api.rasfood.entity.Menu;
 import com.csi.api.rasfood.repository.MenuRepository;
+import com.csi.api.rasfood.repository.projection.MenuProjection;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class MenuController {
     }
 
     @GetMapping("/category/{id}/available")
-    public ResponseEntity<List<Menu>> findAllByCategory(@PathVariable Long id) {
+    public ResponseEntity<List<MenuProjection>> findAllByCategory(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id));
     }
 
