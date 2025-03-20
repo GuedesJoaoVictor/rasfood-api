@@ -1,6 +1,5 @@
 package com.csi.api.rasfood.controller;
 
-import com.csi.api.rasfood.entity.Menu;
 import com.csi.api.rasfood.entity.MenuCategory;
 import com.csi.api.rasfood.repository.MenuCategoryRepository;
 import com.fasterxml.jackson.databind.JsonMappingException;
