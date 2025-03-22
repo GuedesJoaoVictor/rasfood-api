@@ -44,13 +44,15 @@ public class MenuController {
     }
 
     @GetMapping("/category/{id}/available")
-    public ResponseEntity<List<MenuProjection>> findAllByCategory(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id));
+    public ResponseEntity<Page<MenuProjection>> findAllByCategory(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id, pageable));
     }
 
     @GetMapping("/name/{name}/available")
-    public ResponseEntity<List<MenuDto>> findAllByName(@PathVariable String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByName(name));
+    public ResponseEntity<Page<MenuDto>> findAllByName(@PathVariable String name, @RequestParam("page") int page, @RequestParam("size") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByName(name, pageable));
     }
 
     @DeleteMapping("/{id}")
