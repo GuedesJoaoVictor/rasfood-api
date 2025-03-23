@@ -4,6 +4,7 @@ import com.csi.api.rasfood.dto.MenuDto;
 import com.csi.api.rasfood.entity.Menu;
 import com.csi.api.rasfood.repository.MenuRepository;
 import com.csi.api.rasfood.repository.projection.MenuProjection;
+import com.csi.api.rasfood.utils.PageableUtils;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class MenuController {
 //    }
 
     @GetMapping
-    public ResponseEntity<Page<Menu>> findAll(@RequestParam("page") int page, @RequestParam("size") int size,
-                                              @RequestParam(value = "sort", required = false) Sort.Direction sort,
-                                              @RequestParam(value = "property", required = false) String property) {
-        Pageable pageable = Objects.nonNull(sort)
-                ? PageRequest.of(page, size, Sort.by(sort, property))
-                : PageRequest.of(page, size);
+    public ResponseEntity<Page<Menu>> findAll(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam(value = "sort", required = false) Sort.Direction sort,
+            @RequestParam(value = "property", required = false) String property) {
+        Pageable pageable = PageableUtils.createPageable(page, size, sort, property);
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAll(pageable));
     }
 
@@ -50,14 +51,24 @@ public class MenuController {
     }
 
     @GetMapping("/category/{id}/available")
-    public ResponseEntity<Page<MenuProjection>> findAllByCategory(@PathVariable Long id, @RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Page<MenuProjection>> findAllByCategory(
+            @PathVariable Long id,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam(value = "sort", required = false) Sort.Direction sort,
+            @RequestParam(value = "property", required = false) String property) {
+        Pageable pageable = PageableUtils.createPageable(page, size, sort, property);
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByCategory(id, pageable));
     }
 
     @GetMapping("/name/{name}/available")
-    public ResponseEntity<Page<MenuDto>> findAllByName(@PathVariable String name, @RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Page<MenuDto>> findAllByName(
+            @PathVariable String name,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam(value = "sort", required = false) Sort.Direction sort,
+            @RequestParam(value = "property", required = false) String property) {
+        Pageable pageable = PageableUtils.createPageable(page, size, sort, property);
         return ResponseEntity.status(HttpStatus.OK).body(menuRepository.findAllByName(name, pageable));
     }
 
