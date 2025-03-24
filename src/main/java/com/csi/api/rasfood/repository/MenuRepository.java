@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 //import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MenuRepository extends PagingAndSortingRepository<Menu, Long> {
+public interface MenuRepository extends PagingAndSortingRepository<Menu, Long>, JpaSpecificationExecutor<Menu> {
     @Query("select new com.csi.api.rasfood.dto.MenuDto(m.name, m.description, m.price, m.menuCategory.name) from Menu m where m.name like %:name% and m.status = true")
     Page<MenuDto> findAllByName(String name, Pageable pageable);
 
