@@ -15,9 +15,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -111,6 +114,17 @@ public class MenuController {
     public ResponseEntity<Menu> create(@RequestBody Menu menu) {
         menuRepository.save(menu);
         return ResponseEntity.status(HttpStatus.CREATED).body(menu);
+    }
+
+    @PatchMapping(path = "/{id}/img", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Menu> saveImage(@PathVariable("id") Long id, @RequestPart MultipartFile file) throws IOException {
+        Optional<Menu> currentMenu = menuRepository.findById(id);
+        if (currentMenu.isPresent()) {
+            Menu existingMenu = currentMenu.get();
+            existingMenu.setImage(file.getBytes());
+            return ResponseEntity.status(HttpStatus.OK).body(existingMenu);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PatchMapping("/{id}")
