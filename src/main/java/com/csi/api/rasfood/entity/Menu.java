@@ -21,6 +21,8 @@ public class Menu {
     private LocalDateTime createdAt = LocalDateTime.now();
     @ManyToOne(fetch = FetchType.LAZY)
     private MenuCategory menuCategory;
+    @Lob
+    private byte[] image;
 
     public Menu() {}
 
@@ -87,6 +89,14 @@ public class Menu {
 
     public void setCategory(MenuCategory category) {
         this.menuCategory = category;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     @Override
